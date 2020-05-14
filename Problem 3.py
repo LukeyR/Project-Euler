@@ -14,7 +14,7 @@ import math as m
 
 # Could be made more efficient by sieve of eratosthenes, but probably not necessary in this context
 def is_prime(n):
-    for k in range(2,int(m.sqrt(n))):
+    for k in range(2, int(m.sqrt(n))):
         if n % k == 0:
             return False
     return True
