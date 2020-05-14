@@ -20,7 +20,7 @@ fib_list.append(b)
 
 total_sum = 0
 while b < 4000000:
-    if b < 4000000 and b % 2 == 0:
+    if b % 2 == 0:
         total_sum += b
     b += a
     a = b - a
