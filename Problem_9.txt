@@ -1,0 +1,19 @@
+Problem 8:
+A Pythagorean triplet is a set of three natural numbers, a < b < c, for which,
+
+a^2 + b^2 = c^2
+For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
+There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+Find the product abc.
+
+
+This can be easily done by algebra:
+There are infinitly many triples as they can be a multiple+ of a ratio a:b:c
+e.g. 3:4:5 is a triple, and so for any real integer n, 3n:4n:5n is also a triple
+from this, we know that for any ratio a:b:c, an+bn+cn = 1000
+we can rearrange for n, and call it f as follows:
+f: n = 1000/(a+b+c) where n ∈ Real integers >= 0
+From here, we can calculate the first few triples by hand and use their ratio.
+3:4:5 does not work, but 8:15:17 does satisfy the equation, giving n as 25.
+From here, simply multiple 8:15:17 by 25 for 200:375:425 and hence we have found our triple
+200*375*425 = 31875000
