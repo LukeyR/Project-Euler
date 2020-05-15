@@ -1,5 +1,8 @@
+package Problem_11;
 /*
 In the 20×20 grid below, four numbers along a diagonal line have been marked in red.
+Key:
+0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19
 
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
@@ -26,7 +29,6 @@ The product of these numbers is 26 × 63 × 78 × 14 = 1788696.
 What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid?
  */
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 class Problem_11 {
@@ -68,14 +70,14 @@ class Problem_11 {
     }
 
     /**
-     * Determines the maximum product of 4 consecutive digits in all horizontal lines of the 2d array
+     * Determines the maximum product of 4 consecutive digits in all vertical lines of the 2d array
      * @param array 2d array to check product from
-     * @return the maximum integer product from all rows
+     * @return the maximum integer product from all columns
      */
     public int maxVertical(int[][] array) {
         int maxNum = 0;
-        for (int i = 0; i < array.length - 3; ++i) {    // Iterate over all 20 rows
-            for (int j = 0; j < array[i].length; ++j) {    // Iterate over the numbers within the array, up to 4th last
+        for (int i = 0; i < array.length - 3; ++i) {    // Iterate over 20 rows, up to the 4th last
+            for (int j = 0; j < array[i].length; ++j) {    // Iterate over all the numbers within the row
                 int tempProduct = 1;
                 for (int k = 0; k < 4; ++k) {
                     tempProduct *= array[i+k][j];
@@ -88,10 +90,67 @@ class Problem_11 {
         return maxNum;
     }
 
+    /**
+     * Determines the maximum product of 4 consecutive digits in a diagonal line, goinf top right to bottom left
+     * See Problem_11_down.pdf for explanation and visualisation of algorithm
+     * @param array 2d array to check product from
+     * @return the maximum integer product from down-diagonals
+     */
+    public int maxDiagonalDown(int[][] array) {
+        int maxNum = 0;
+        for (int i = 0; i < array.length-3; i++) { // Start from row 0, go to 16. Can't go further or diagonal will overflow
+            for (int j = 0; j < array[i].length-3; ++j) { // Start from column 0, go to 16. Can't go further ^^
+                int tempProduct = 1;
+                for (int k = 0; k < 4; ++k) {
+                    tempProduct *= array[i+k][j+k];
+                }
+                if (tempProduct > maxNum) {
+                    maxNum = tempProduct;
+                }
+            }
+        }
+        return maxNum;
+    }
+
+    /**
+     * Similar to {@link #maxDiagonalDown} except goes up
+     * @param array 2d array to check product from
+     * @return the maximum integer product from up-diagonals
+     */
+    public int maxDiagonalUp(int[][] array) {
+        int maxNum = 0;
+        for (int i = 3; i < array.length; i++) { // Start from row 0, go to 16. Can't go further or diagonal will overflow
+            for (int j = 0; j < array[i].length-3; ++j) { // Start from column 0, go to 16. Can't go further ^^
+                int tempProduct = 1;
+                for (int k = 0; k < 4; ++k) {
+                    tempProduct *= array[i-k][j+k];
+                }
+                if (tempProduct > maxNum) {
+                    maxNum = tempProduct;
+                }
+            }
+        }
+        return maxNum;
+    }
+
+    /**
+     * my implementation of math.max()
+     * @param num1 number to be compared
+     * @param num2 other number to be compared
+     * @return bigger number of the two
+     */
+    public int max(int num1, int num2){
+        return (num1 > num2) ? num1 : num2;
+    }
+
+
     public static void main(String[] args) {
         Problem_11 p11 = new Problem_11();
         int[][] array = p11.create2dArray();
-        System.out.println(p11.maxHorizontal(array));
-        System.out.println(p11.maxVertical(array));
+        int a = p11.maxHorizontal(array);
+        int b = p11.maxVertical(array);
+        int c = p11.maxDiagonalDown(array);
+        int d = p11.maxDiagonalUp(array);
+        System.out.println(p11.max(p11.max(a,b),p11.max(c,d)));
     }
 }
